@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Inacure</string>
+    <string name="search">Search</string>
+    <string name="icon_scanner">Icon Scanner</string>
+    <string name="icon">Icon</string>
+    <string name="logo">Logo Inacure</string>
 </resources>
