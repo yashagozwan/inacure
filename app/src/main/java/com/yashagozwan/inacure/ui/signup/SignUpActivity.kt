@@ -1,25 +1,22 @@
-package com.yashagozwan.inacure.ui.signin
+package com.yashagozwan.inacure.ui.signup
 
-import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.yashagozwan.inacure.R
-import com.yashagozwan.inacure.databinding.ActivitySignInBinding
-import com.yashagozwan.inacure.ui.signup.SignUpActivity
+import com.yashagozwan.inacure.databinding.ActivitySignUpBinding
 
-class SignInActivity : AppCompatActivity(), View.OnClickListener {
-    private lateinit var binding: ActivitySignInBinding
+class SignUpActivity : AppCompatActivity(), View.OnClickListener {
+    private lateinit var binding: ActivitySignUpBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySignInBinding.inflate(layoutInflater)
+        binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
         hideAppBar()
         customStatusBar()
         addButtonListener()
-
     }
 
     private fun hideAppBar() {
@@ -34,16 +31,12 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun addButtonListener() {
-        binding.btnSignIn.setOnClickListener(this)
-        binding.tvSignUp.setOnClickListener(this)
+        binding.tvSignIn.setOnClickListener(this)
     }
 
     override fun onClick(view: View) {
         when (view.id) {
-            R.id.btn_sign_in -> {}
-            R.id.tv_sign_up -> Intent(this, SignUpActivity::class.java).also {
-                startActivity(it)
-            }
+            R.id.tv_sign_in -> finish()
         }
     }
 }

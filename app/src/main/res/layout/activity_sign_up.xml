@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.signin.SignInActivity">
+    tools:context=".ui.signup.SignUpActivity">
 
     <ImageView
         android:id="@+id/tv_image"
@@ -28,16 +28,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <TextView
-        android:id="@+id/tv_sign_in_title"
+        android:id="@+id/tv_sign_up_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="26dp"
         android:layout_marginTop="26dp"
         android:layout_marginEnd="26dp"
         android:fontFamily="@font/poppins_semi_bold"
-        android:text="@string/log_in"
+        android:text="@string/sign_up"
         android:textColor="@color/black"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -45,7 +44,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_image" />
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_name"
@@ -55,6 +53,32 @@
         android:layout_marginStart="26dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="26dp"
+        android:hint="@string/name"
+        app:boxCornerRadiusBottomEnd="@dimen/my_corner"
+        app:boxCornerRadiusBottomStart="@dimen/my_corner"
+        app:boxCornerRadiusTopEnd="@dimen/my_corner"
+        app:boxCornerRadiusTopStart="@dimen/my_corner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_title">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:inputType="textEmailAddress"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_email"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="26dp"
         android:hint="@string/email"
         app:boxCornerRadiusBottomEnd="@dimen/my_corner"
         app:boxCornerRadiusBottomStart="@dimen/my_corner"
@@ -62,7 +86,7 @@
         app:boxCornerRadiusTopStart="@dimen/my_corner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_sign_in_title">
+        app:layout_constraintTop_toBottomOf="@+id/til_name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_email"
@@ -90,7 +114,7 @@
         app:endIconTint="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til_name">
+        app:layout_constraintTop_toBottomOf="@+id/til_email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_password"
@@ -101,40 +125,23 @@
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/tv_forgot_password"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="26dp"
-        android:fontFamily="@font/poppins_regular"
-        android:text="@string/forgot_password"
-        android:textAlignment="textEnd"
-        android:textColor="@color/grey"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til_password" />
-
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_sign_in"
+        android:id="@+id/btn_sign_up"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="26dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="26dp"
         android:fontFamily="@font/poppins_semi_bold"
         android:insetTop="0dp"
         android:insetBottom="0dp"
-        android:text="@string/sign_in"
+        android:text="@string/sign_up"
         android:textAllCaps="false"
         app:cornerRadius="@dimen/my_corner"
         app:elevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password" />
-
+        app:layout_constraintTop_toBottomOf="@+id/til_password" />
 
     <com.google.android.flexbox.FlexboxLayout
         android:layout_width="0dp"
@@ -152,16 +159,15 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
             android:fontFamily="@font/poppins_regular"
-            android:text="@string/don_t_have_an_account" />
+            android:text="@string/have_an_account" />
 
         <TextView
-            android:id="@+id/tv_sign_up"
+            android:id="@+id/tv_sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
-            android:text="@string/sign_up"
+            android:text="@string/sign_in"
             android:textColor="@color/blue" />
     </com.google.android.flexbox.FlexboxLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
