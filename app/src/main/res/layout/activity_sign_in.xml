@@ -36,6 +36,7 @@
         android:layout_marginStart="26dp"
         android:layout_marginTop="26dp"
         android:layout_marginEnd="26dp"
+        android:fontFamily="@font/poppins_semi_bold"
         android:text="@string/log_in"
         android:textColor="@color/black"
         android:textSize="28sp"
@@ -52,7 +53,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="26dp"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="26dp"
         android:hint="@string/email"
         app:boxCornerRadiusBottomEnd="@dimen/my_corner"
@@ -66,7 +67,10 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:inputType="textEmailAddress"
+            android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -83,6 +87,7 @@
         app:boxCornerRadiusTopEnd="@dimen/my_corner"
         app:boxCornerRadiusTopStart="@dimen/my_corner"
         app:endIconMode="password_toggle"
+        app:endIconTint="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_email">
@@ -91,7 +96,9 @@
             android:id="@+id/edit_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+            android:fontFamily="@font/poppins_regular"
+            android:inputType="textPassword"
+            android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -101,10 +108,11 @@
         android:layout_marginStart="26dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="26dp"
+        android:fontFamily="@font/poppins_regular"
         android:text="@string/forgot_password"
         android:textAlignment="textEnd"
         android:textColor="@color/grey"
-        android:textStyle="bold"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_password" />
@@ -116,26 +124,43 @@
         android:layout_marginStart="26dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="26dp"
+        android:fontFamily="@font/poppins_semi_bold"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         android:text="@string/sign_in"
         app:cornerRadius="@dimen/my_corner"
+        app:elevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password" />
 
-    <TextView
-        android:id="@+id/tv_create_account"
+
+    <com.google.android.flexbox.FlexboxLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="26dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="26dp"
-        android:text="@string/don_t_have_an_account_sign_in"
-        android:textAlignment="center"
-        android:textColor="@color/grey"
-        android:textStyle="bold"
+        app:justifyContent="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_sign_in" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_sign_in">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/don_t_have_an_account" />
+
+        <TextView
+            android:id="@+id/tv_sign_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/sign_up"
+            android:textColor="@color/blue" />
+    </com.google.android.flexbox.FlexboxLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
