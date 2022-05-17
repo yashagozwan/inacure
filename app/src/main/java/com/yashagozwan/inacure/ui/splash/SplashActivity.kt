@@ -2,14 +2,14 @@ package com.yashagozwan.inacure.ui.splash
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.yashagozwan.inacure.R
 import com.yashagozwan.inacure.databinding.ActivitySplashBinding
-import com.yashagozwan.inacure.ui.main.MainActivity
+import com.yashagozwan.inacure.ui.signin.SignInActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
@@ -31,7 +31,7 @@ class SplashActivity : AppCompatActivity() {
     private fun setDuration() {
         val duration = 3000L
         Handler(Looper.getMainLooper()).postDelayed({
-            Intent(this@SplashActivity, MainActivity::class.java).also { startActivity(it) }
+            Intent(this@SplashActivity, SignInActivity::class.java).also { startActivity(it) }
             finish()
         }, duration)
     }

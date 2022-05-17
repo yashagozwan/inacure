@@ -4,4 +4,11 @@
     <string name="icon_scanner">Icon Scanner</string>
     <string name="icon">Icon</string>
     <string name="logo">Logo Inacure</string>
+    <string name="image">Image from unsplash</string>
+    <string name="log_in">Log In</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="don_t_have_an_account_sign_in">Don\'t have an account? Sign In</string>
 </resources>

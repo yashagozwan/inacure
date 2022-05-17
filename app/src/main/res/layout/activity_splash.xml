@@ -8,10 +8,10 @@
 
     <ImageView
         android:id="@+id/tv_inacure"
-        android:layout_width="120dp"
+        android:layout_width="100dp"
         android:layout_height="90dp"
         android:contentDescription="@string/logo"
-        android:src="@drawable/inacure"
+        android:src="@drawable/logo_inacure"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
