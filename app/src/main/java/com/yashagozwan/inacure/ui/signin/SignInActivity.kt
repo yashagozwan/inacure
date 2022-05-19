@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import com.yashagozwan.inacure.R
 import com.yashagozwan.inacure.databinding.ActivitySignInBinding
+import com.yashagozwan.inacure.ui.main.MainActivity
 import com.yashagozwan.inacure.ui.signup.SignUpActivity
 
 class SignInActivity : AppCompatActivity(), View.OnClickListener {
@@ -40,10 +41,8 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(view: View) {
         when (view.id) {
-            R.id.btn_sign_in -> {}
-            R.id.tv_sign_up -> Intent(this, SignUpActivity::class.java).also {
-                startActivity(it)
-            }
+            R.id.btn_sign_in -> Intent(this, MainActivity::class.java).also { startActivity(it) }
+            R.id.tv_sign_up -> Intent(this, SignUpActivity::class.java).also { startActivity(it) }
         }
     }
 }
