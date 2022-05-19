@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Inacure">
         <activity
+            android:name=".ui.UploadActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.scan.ScanActivity"
             android:exported="false" />
         <activity

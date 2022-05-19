@@ -22,4 +22,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_plant">Search Plant</string>
     <string name="plant_benefits">Plant Benefits</string>
+    <string name="search_by_image">Search By Image</string>
+    <string name="upload_image">Upload Image</string>
+    <string name="png_jpg_and_gif_files_are_allowed">PNG, JPG and GIF files are allowed</string>
+    <string name="choose_a_file">Choose a file</string>
+    <string name="upload_your_image">Upload your image</string>
 </resources>
