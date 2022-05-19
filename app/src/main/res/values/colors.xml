@@ -10,8 +10,10 @@
 
     <!--  My Color  -->
     <color name="green">#66A182</color>
+    <color name="light_green">#AEF78E</color>
     <color name="grey">#ADB5BD</color>
     <color name="blue">#2685CA</color>
     <color name="dark_blue">#2E4057</color>
+    <color name="dark_grey">#343434</color>
     <color name="invisible">#00FFFFFF</color>
 </resources>

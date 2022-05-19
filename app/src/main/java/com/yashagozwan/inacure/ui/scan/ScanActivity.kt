@@ -4,9 +4,10 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.yashagozwan.inacure.R
 import com.yashagozwan.inacure.databinding.ActivityScanBinding
 
-class ScanActivity : AppCompatActivity() {
+class ScanActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityScanBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,10 +16,21 @@ class ScanActivity : AppCompatActivity() {
         setContentView(binding.root)
         customStatusBar()
         hideAppBar()
+        addButtonListener()
     }
 
     private fun hideAppBar() {
         supportActionBar?.hide()
+    }
+
+    private fun addButtonListener() {
+        binding.btnBack.setOnClickListener(this)
+    }
+
+    override fun onClick(view: View) {
+        when (view.id) {
+            R.id.btn_back -> finish()
+        }
     }
 
     @Suppress("DEPRECATION")
