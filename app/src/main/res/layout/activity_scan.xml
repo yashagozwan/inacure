@@ -6,14 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".ui.scan.ScanActivity">
 
-    <ImageView
-        android:id="@+id/iv_scan"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/bawang" />
+    <androidx.camera.view.PreviewView
+        android:id="@+id/view_finder"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/flexboxLayout3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -62,6 +65,7 @@
     </com.google.android.flexbox.FlexboxLayout>
 
     <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimationView"
         android:layout_width="300dp"
         android:layout_height="500dp"
         android:scaleType="fitXY"

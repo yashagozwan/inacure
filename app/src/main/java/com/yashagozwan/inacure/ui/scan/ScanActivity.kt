@@ -6,9 +6,14 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.yashagozwan.inacure.R
@@ -57,13 +62,48 @@ class ScanActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun startCamera() {
+        val activity = this
+        val cameraProvideFuture = ProcessCameraProvider.getInstance(activity)
+        cameraProvideFuture.addListener({
+            val cameraProvider = cameraProvideFuture.get()
 
+            val preview = Preview.Builder()
+                .build()
+                .also { it.setSurfaceProvider(viewBinding.viewFinder.surfaceProvider) }
+
+            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+
+            try {
+                cameraProvider.unbindAll()
+                cameraProvider.bindToLifecycle(activity, cameraSelector, preview)
+            } catch (exc: Exception) {
+                Log.e(TAG, "Use case binding failed", exc)
+            }
+        }, ContextCompat.getMainExecutor(activity))
     }
 
     private fun allPermissionsGranted(): Boolean {
         return REQUIRED_PERMISSIONS.all {
             ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
         }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == REQUEST_PERMISSION_CODE) {
+            if (allPermissionsGranted()) {
+                startCamera()
+            } else {
+                showToast("Permission not granted by user")
+                finish()
+            }
+        }
+
     }
 
     @Suppress("DEPRECATION")
@@ -79,7 +119,12 @@ class ScanActivity : AppCompatActivity(), View.OnClickListener {
         cameraExecutor.shutdown()
     }
 
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
     companion object {
+        private val TAG = ScanActivity::class.java.simpleName
         private const val REQUEST_PERMISSION_CODE = 10
         private val REQUIRED_PERMISSIONS = mutableListOf(Manifest.permission.CAMERA).apply {
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
