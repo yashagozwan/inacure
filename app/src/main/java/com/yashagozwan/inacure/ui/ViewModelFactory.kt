@@ -1,11 +1,17 @@
 package com.yashagozwan.inacure.ui
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.yashagozwan.inacure.data.repositories.UserRepository
+import com.yashagozwan.inacure.di.Injection
 import com.yashagozwan.inacure.ui.main.MainViewModel
 import com.yashagozwan.inacure.ui.splash.SplashViewModel
 
-class ViewModelFactory private constructor() : ViewModelProvider.NewInstanceFactory() {
+class ViewModelFactory private constructor(
+    private val userRepository: UserRepository
+) :
+    ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
@@ -19,8 +25,8 @@ class ViewModelFactory private constructor() : ViewModelProvider.NewInstanceFact
         @Volatile
         private var instance: ViewModelFactory? = null
 
-        fun getInstance() = instance ?: synchronized(this) {
-            instance ?: ViewModelFactory()
+        fun getInstance(context: Context) = instance ?: synchronized(this) {
+            instance ?: ViewModelFactory(userRepository = Injection.provideUserRepository(context))
         }.also { instance = it }
     }
 }
