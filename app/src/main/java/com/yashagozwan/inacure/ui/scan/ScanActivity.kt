@@ -18,7 +18,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.yashagozwan.inacure.R
 import com.yashagozwan.inacure.databinding.ActivityScanBinding
-import com.yashagozwan.inacure.ui.UploadActivity
+import com.yashagozwan.inacure.ui.upload.UploadActivity
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 

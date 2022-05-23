@@ -4,23 +4,28 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.activity.viewModels
 import com.yashagozwan.inacure.R
 import com.yashagozwan.inacure.databinding.ActivitySignInBinding
-import com.yashagozwan.inacure.ui.main.MainActivity
+import com.yashagozwan.inacure.model.SignIn
+import com.yashagozwan.inacure.ui.ViewModelFactory
 import com.yashagozwan.inacure.ui.signup.SignUpActivity
+import com.yashagozwan.inacure.data.network.Result
 
 class SignInActivity : AppCompatActivity(), View.OnClickListener {
-    private lateinit var binding: ActivitySignInBinding
+    private lateinit var viewBinding: ActivitySignInBinding
+    private val factory = ViewModelFactory.getInstance(this)
+    private val signInViewModel: SignInViewModel by viewModels { factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySignInBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        viewBinding = ActivitySignInBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
         hideAppBar()
         customStatusBar()
         addButtonListener()
-
     }
 
     private fun hideAppBar() {
@@ -35,14 +40,49 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun addButtonListener() {
-        binding.btnSignIn.setOnClickListener(this)
-        binding.tvSignUp.setOnClickListener(this)
+        viewBinding.btnSignIn.setOnClickListener(this)
+        viewBinding.tvSignUp.setOnClickListener(this)
     }
 
     override fun onClick(view: View) {
         when (view.id) {
-            R.id.btn_sign_in -> Intent(this, MainActivity::class.java).also { startActivity(it) }
+            R.id.btn_sign_in -> signIn()
             R.id.tv_sign_up -> Intent(this, SignUpActivity::class.java).also { startActivity(it) }
         }
+    }
+
+    private fun signIn() {
+        val email = viewBinding.editEmail.text.toString().trim()
+        val password = viewBinding.editPassword.text.toString().trim()
+
+        if (email.isEmpty()) {
+            viewBinding.editEmail.error = "Field not allowed empty"
+            return
+        }
+
+        if (password.isEmpty()) {
+            viewBinding.editPassword.error = "Field not allowed ampty"
+            return
+        }
+
+        val signIn = SignIn(email, password)
+        signInViewModel.signIn(signIn).observe(this) {
+            when (it) {
+                is Result.Loading -> {
+                    Log.d(TAG, "Loading...")
+                }
+                is Result.Success -> {
+                    Log.d(TAG, "Mantap")
+                }
+                is Result.Error -> {
+                    val error = it.error
+                    Log.d(TAG, error)
+                }
+            }
+        }
+    }
+
+    companion object {
+        private val TAG = SignInActivity::class.java.simpleName
     }
 }

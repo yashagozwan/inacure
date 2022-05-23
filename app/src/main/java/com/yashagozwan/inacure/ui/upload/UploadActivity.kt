@@ -1,4 +1,4 @@
-package com.yashagozwan.inacure.ui
+package com.yashagozwan.inacure.ui.upload
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
