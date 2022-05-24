@@ -18,6 +18,8 @@ class UserRepository private constructor(
 
     fun getToken() = sharedPreferences.getToken().asLiveData()
 
+    suspend fun deleteToken() = sharedPreferences.deleteToken()
+
     fun signIn(signIn: SignIn) = liveData {
         emit(Result.Loading)
         try {

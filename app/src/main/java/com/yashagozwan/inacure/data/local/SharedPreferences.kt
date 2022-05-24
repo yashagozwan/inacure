@@ -23,6 +23,10 @@ class SharedPreferences private constructor(private val context: Context) {
         return context.dataStore.data.map { settings -> settings[TOKEN] ?: "" }
     }
 
+    suspend fun deleteToken() {
+        context.dataStore.edit { settings -> settings[TOKEN] = "" }
+    }
+
     companion object {
         private val TOKEN = stringPreferencesKey("token")
 

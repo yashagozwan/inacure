@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/developer/development/android-dev-submission/Inacure/app/src/main/res/drawable/bottom_nav_icon_color_selector.xml" value="0.288" />
+        <entry key="..\:/developer/development/android-dev-submission/Inacure/app/src/main/res/drawable/ic_account_circle.xml" value="0.194" />
         <entry key="..\:/developer/development/android-dev-submission/Inacure/app/src/main/res/drawable/ic_home.xml" value="0.295" />
         <entry key="..\:/developer/development/android-dev-submission/Inacure/app/src/main/res/drawable/ic_scan.xml" value="0.288" />
         <entry key="..\:/developer/development/android-dev-submission/Inacure/app/src/main/res/drawable/search_bg.xml" value="0.2605" />
@@ -16,6 +17,7 @@
         <entry key="..\:/developer/development/android-dev-submission/Inacure/app/src/main/res/layout/fragment_bookmark.xml" value="0.3307291666666667" />
         <entry key="..\:/developer/development/android-dev-submission/Inacure/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/developer/development/android-dev-submission/Inacure/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
+        <entry key="..\:/developer/development/android-dev-submission/Inacure/app/src/main/res/layout/item_menu_profile.xml" value="0.264" />
         <entry key="..\:/developer/development/android-dev-submission/Inacure/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.3296875" />
       </map>
     </option>

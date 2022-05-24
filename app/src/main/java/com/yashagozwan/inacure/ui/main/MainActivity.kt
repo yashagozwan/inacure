@@ -2,6 +2,7 @@ package com.yashagozwan.inacure.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -45,8 +46,11 @@ class MainActivity : AppCompatActivity() {
             } else {
                 viewModel.getUserProfile(token).observe(this) {
                     when (it) {
-                        is Result.Loading -> {}
+                        is Result.Loading -> {
+                            binding.cvLoading.visibility = View.VISIBLE
+                        }
                         is Result.Success -> {
+                            binding.cvLoading.visibility = View.GONE
                             val response = it.data
                             val myUser = response.data
                             user = User(
@@ -58,6 +62,7 @@ class MainActivity : AppCompatActivity() {
                             )
                         }
                         is Result.Error -> {
+                            binding.cvLoading.visibility = View.GONE
                             startActivity(intent)
                             finish()
                         }
@@ -93,7 +98,7 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.navigation_profile -> {
                     val mBundle = Bundle()
-                    val mFragment = ProfileFragment()
+                    val mFragment = ProfileFragment(this)
                     mBundle.putParcelable("USER", user)
                     mFragment.arguments = mBundle
                     replaceFragment(mFragment)
