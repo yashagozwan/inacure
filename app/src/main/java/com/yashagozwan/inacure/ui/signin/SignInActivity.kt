@@ -13,11 +13,12 @@ import com.yashagozwan.inacure.model.SignIn
 import com.yashagozwan.inacure.ui.ViewModelFactory
 import com.yashagozwan.inacure.ui.signup.SignUpActivity
 import com.yashagozwan.inacure.data.network.Result
+import com.yashagozwan.inacure.ui.main.MainActivity
 
 class SignInActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var viewBinding: ActivitySignInBinding
     private val factory = ViewModelFactory.getInstance(this)
-    private val signInViewModel: SignInViewModel by viewModels { factory }
+    private val viewModel: SignInViewModel by viewModels { factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,15 +67,21 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         val signIn = SignIn(email, password)
-        signInViewModel.signIn(signIn).observe(this) {
+        viewModel.signIn(signIn).observe(this) {
             when (it) {
                 is Result.Loading -> {
-                    Log.d(TAG, "Loading...")
+                    viewBinding.cvLoading.visibility = View.VISIBLE
                 }
                 is Result.Success -> {
-                    Log.d(TAG, "Mantap")
+                    viewBinding.cvLoading.visibility = View.GONE
+                    val response = it.data
+                    val token = response.data.token
+                    viewModel.saveToken(token)
+                    Intent(this@SignInActivity, MainActivity::class.java).also { startActivity(it) }
+                    finish()
                 }
                 is Result.Error -> {
+                    viewBinding.cvLoading.visibility = View.GONE
                     val error = it.error
                     Log.d(TAG, error)
                 }

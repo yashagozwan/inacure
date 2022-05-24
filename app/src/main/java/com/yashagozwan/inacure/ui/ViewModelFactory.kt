@@ -19,8 +19,12 @@ class ViewModelFactory private constructor(
             modelClass.isAssignableFrom(SignInViewModel::class.java) -> SignInViewModel(
                 userRepository
             ) as T
-            modelClass.isAssignableFrom(MainViewModel::class.java) -> MainViewModel() as T
-            modelClass.isAssignableFrom(SplashViewModel::class.java) -> SplashViewModel() as T
+            modelClass.isAssignableFrom(MainViewModel::class.java) -> MainViewModel(
+                userRepository
+            ) as T
+            modelClass.isAssignableFrom(SplashViewModel::class.java) -> SplashViewModel(
+                userRepository
+            ) as T
             else -> throw IllegalArgumentException("Invalid ViewModel class: ${modelClass.name}")
         }
     }

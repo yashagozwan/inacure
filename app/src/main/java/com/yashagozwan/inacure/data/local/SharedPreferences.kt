@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -18,8 +19,8 @@ class SharedPreferences private constructor(private val context: Context) {
         }
     }
 
-    fun getToken() = context.dataStore.data.map { settings ->
-        settings[TOKEN] ?: ""
+    fun getToken(): Flow<String> {
+        return context.dataStore.data.map { settings -> settings[TOKEN] ?: "" }
     }
 
     companion object {

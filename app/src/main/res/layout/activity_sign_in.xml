@@ -137,6 +137,7 @@
 
 
     <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/flexboxLayout4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="26dp"
@@ -162,6 +163,27 @@
             android:text="@string/sign_up"
             android:textColor="@color/blue" />
     </com.google.android.flexbox.FlexboxLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:translationZ="100dp"
+        android:visibility="gone"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading" />
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
