@@ -55,13 +55,13 @@ class ScanActivity : AppCompatActivity(), View.OnClickListener {
     private fun addButtonListener() {
         viewBinding.btnBack.setOnClickListener(this)
         viewBinding.btnUpload.setOnClickListener(this)
-<<<<<<< HEAD
+
         viewBinding.ivCapture.setOnClickListener {
             Toast.makeText(this, "capture", Toast.LENGTH_SHORT).show()
         }
-=======
+
         viewBinding.ivCapture.setOnClickListener(this)
->>>>>>> navigation
+
     }
 
     override fun onClick(view: View) {
@@ -95,8 +95,7 @@ class ScanActivity : AppCompatActivity(), View.OnClickListener {
         }, ContextCompat.getMainExecutor(activity))
     }
 
-<<<<<<< HEAD
-=======
+
     private fun takeImage() {
         val imageCapture = imageCapture ?: return
         val photoFile = createFile(application)
@@ -120,7 +119,7 @@ class ScanActivity : AppCompatActivity(), View.OnClickListener {
             })
     }
 
->>>>>>> navigation
+
     private fun allPermissionsGranted(): Boolean {
         return REQUIRED_PERMISSIONS.all {
             ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
