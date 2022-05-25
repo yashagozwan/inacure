@@ -55,9 +55,13 @@ class ScanActivity : AppCompatActivity(), View.OnClickListener {
     private fun addButtonListener() {
         viewBinding.btnBack.setOnClickListener(this)
         viewBinding.btnUpload.setOnClickListener(this)
+<<<<<<< HEAD
         viewBinding.ivCapture.setOnClickListener {
             Toast.makeText(this, "capture", Toast.LENGTH_SHORT).show()
         }
+=======
+        viewBinding.ivCapture.setOnClickListener(this)
+>>>>>>> navigation
     }
 
     override fun onClick(view: View) {
@@ -80,15 +84,43 @@ class ScanActivity : AppCompatActivity(), View.OnClickListener {
 
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
+            imageCapture = ImageCapture.Builder().build()
+
             try {
                 cameraProvider.unbindAll()
-                cameraProvider.bindToLifecycle(activity, cameraSelector, preview)
+                cameraProvider.bindToLifecycle(activity, cameraSelector, preview, imageCapture)
             } catch (exc: Exception) {
                 Log.e(TAG, "Use case binding failed", exc)
             }
         }, ContextCompat.getMainExecutor(activity))
     }
 
+<<<<<<< HEAD
+=======
+    private fun takeImage() {
+        val imageCapture = imageCapture ?: return
+        val photoFile = createFile(application)
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+
+        imageCapture.takePicture(
+            outputOptions,
+            ContextCompat.getMainExecutor(this),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                    val intent = Intent()
+                    intent.putExtra("image", photoFile)
+                    setResult(MainActivity.CAMERA_X_RESULT, intent)
+                    finish()
+                }
+
+                override fun onError(exception: ImageCaptureException) {
+                    Toast.makeText(this@ScanActivity, "Failed take image", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            })
+    }
+
+>>>>>>> navigation
     private fun allPermissionsGranted(): Boolean {
         return REQUIRED_PERMISSIONS.all {
             ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
