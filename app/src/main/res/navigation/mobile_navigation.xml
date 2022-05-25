@@ -27,6 +27,10 @@
         android:id="@+id/navigation_profile"
         android:name="com.yashagozwan.inacure.ui.main.profile.ProfileFragment"
         android:label="@string/profile"
-        tools:layout="@layout/fragment_profile" />
-
+        tools:layout="@layout/fragment_profile">
+        <argument
+            android:name="name"
+            android:defaultValue="yasha"
+            app:argType="string" />
+    </fragment>
 </navigation>

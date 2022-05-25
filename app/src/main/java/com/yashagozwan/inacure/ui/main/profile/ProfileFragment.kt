@@ -10,7 +10,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.yashagozwan.inacure.data.network.Result
 import com.yashagozwan.inacure.databinding.FragmentProfileBinding
 import com.yashagozwan.inacure.model.User
 import com.yashagozwan.inacure.ui.ViewModelFactory
@@ -49,12 +51,24 @@ class ProfileFragment : Fragment() {
     }
 
     private fun renderProfile() {
-        val bundle = arguments
-        val user = bundle?.getParcelable<User>("USER")
-
-        if (user != null) {
-            viewBinding.tvName.text = user.name
-            viewBinding.tvEmail.text = user.email
+        viewModel.getToken().observe(viewLifecycleOwner) { token ->
+            viewModel.getUserProfile(token).observe(viewLifecycleOwner) {
+                when (it) {
+                    is Result.Loading -> {
+                        viewBinding.cvLoading.visibility = View.VISIBLE
+                    }
+                    is Result.Success -> {
+                        viewBinding.cvLoading.visibility = View.GONE
+                        val response = it.data
+                        val user = response.data
+                        viewBinding.tvName.text = user.name
+                        viewBinding.tvEmail.text = user.email
+                    }
+                    is Result.Error -> {
+                        viewBinding.cvLoading.visibility = View.GONE
+                    }
+                }
+            }
         }
     }
 
