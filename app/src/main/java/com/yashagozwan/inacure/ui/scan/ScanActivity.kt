@@ -12,13 +12,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.yashagozwan.inacure.R
 import com.yashagozwan.inacure.databinding.ActivityScanBinding
+import com.yashagozwan.inacure.ui.main.MainActivity
 import com.yashagozwan.inacure.ui.upload.UploadActivity
+import com.yashagozwan.inacure.utils.Util.createFile
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -52,10 +55,14 @@ class ScanActivity : AppCompatActivity(), View.OnClickListener {
     private fun addButtonListener() {
         viewBinding.btnBack.setOnClickListener(this)
         viewBinding.btnUpload.setOnClickListener(this)
+        viewBinding.ivCapture.setOnClickListener {
+            Toast.makeText(this, "capture", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onClick(view: View) {
         when (view.id) {
+            R.id.iv_capture -> takeImage()
             R.id.btn_back -> finish()
             R.id.btn_upload -> Intent(this, UploadActivity::class.java).also { startActivity(it) }
         }
@@ -80,10 +87,6 @@ class ScanActivity : AppCompatActivity(), View.OnClickListener {
                 Log.e(TAG, "Use case binding failed", exc)
             }
         }, ContextCompat.getMainExecutor(activity))
-    }
-
-    private fun takePhoto() {
-
     }
 
     private fun allPermissionsGranted(): Boolean {
