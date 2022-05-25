@@ -17,13 +17,11 @@ import com.yashagozwan.inacure.ui.ViewModelFactory
 import com.yashagozwan.inacure.ui.signin.SignInActivity
 import com.yashagozwan.inacure.utils.myItemMenu
 
-class ProfileFragment(context: Context) : Fragment() {
+class ProfileFragment : Fragment() {
     private var _viewBinding: FragmentProfileBinding? = null
     private val viewBinding get() = _viewBinding!!
-    private val myContext = context
-    private val factory = ViewModelFactory.getInstance(myContext)
+    private lateinit var factory: ViewModelFactory
     private val viewModel: ProfileViewModel by viewModels { factory }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,31 +34,50 @@ class ProfileFragment(context: Context) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val bundle = arguments
-        val user = bundle?.getParcelable<User>("USER") as User
-        viewBinding.tvName.text = user.name
-        viewBinding.tvEmail.text = user.email
+
+        checkIfFragmentAttached {
+            factory = ViewModelFactory.getInstance(this)
+        }
+
+        renderProfile()
 
         val rvMenu = viewBinding.rvMenu
         rvMenu.layoutManager = LinearLayoutManager(activity)
         rvMenu.adapter = ItemMenuAdapter(myItemMenu())
 
-        viewBinding.cvSignOut.setOnClickListener {
-            showAlert()
+        viewBinding.cvSignOut.setOnClickListener { showAlert() }
+    }
+
+    private fun renderProfile() {
+        val bundle = arguments
+        val user = bundle?.getParcelable<User>("USER")
+
+        if (user != null) {
+            viewBinding.tvName.text = user.name
+            viewBinding.tvEmail.text = user.email
         }
     }
 
     private fun showAlert() {
-        val alertBuilder = AlertDialog.Builder(myContext)
-        val alert = alertBuilder
-            .setTitle("Are your sure?")
-            .setNegativeButton("No") { dialog, _ -> dialog.cancel() }
-            .setPositiveButton("Yes") { _, _ ->
-                activity?.finish()
-                viewModel.deleteToken()
-            }
+        checkIfFragmentAttached {
+            val alertBuilder = AlertDialog.Builder(this)
+            val alert = alertBuilder
+                .setTitle("Are your sure?")
+                .setNegativeButton("No") { dialog, _ -> dialog.cancel() }
+                .setPositiveButton("Yes") { _, _ ->
+                    val intent = Intent(activity, SignInActivity::class.java)
+                    activity?.startActivity(intent)
+                    activity?.finish()
+                    viewModel.deleteToken()
+                }
+            alert.show()
+        }
+    }
 
-        alert.show()
+    private fun checkIfFragmentAttached(operation: Context.() -> Unit) {
+        if (isAdded && context != null) {
+            operation(requireContext())
+        }
     }
 
     override fun onDestroy() {

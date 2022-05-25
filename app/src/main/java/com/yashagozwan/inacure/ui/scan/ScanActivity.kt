@@ -82,6 +82,10 @@ class ScanActivity : AppCompatActivity(), View.OnClickListener {
         }, ContextCompat.getMainExecutor(activity))
     }
 
+    private fun takePhoto() {
+
+    }
+
     private fun allPermissionsGranted(): Boolean {
         return REQUIRED_PERMISSIONS.all {
             ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
@@ -112,7 +116,6 @@ class ScanActivity : AppCompatActivity(), View.OnClickListener {
             View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         window.statusBarColor = Color.TRANSPARENT
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

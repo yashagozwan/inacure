@@ -38,10 +38,8 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun getUserProfile() {
-        val intent = Intent(this@MainActivity, SignInActivity::class.java)
         viewModel.getToken().observe(this) { token ->
             if (token.isEmpty()) {
-                startActivity(intent)
                 finish()
             } else {
                 viewModel.getUserProfile(token).observe(this) {
@@ -63,7 +61,6 @@ class MainActivity : AppCompatActivity() {
                         }
                         is Result.Error -> {
                             binding.cvLoading.visibility = View.GONE
-                            startActivity(intent)
                             finish()
                         }
                     }
@@ -98,7 +95,7 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.navigation_profile -> {
                     val mBundle = Bundle()
-                    val mFragment = ProfileFragment(this)
+                    val mFragment = ProfileFragment()
                     mBundle.putParcelable("USER", user)
                     mFragment.arguments = mBundle
                     replaceFragment(mFragment)
@@ -107,10 +104,6 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun replaceFragment(fragment: Fragment) {

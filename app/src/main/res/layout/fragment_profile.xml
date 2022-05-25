@@ -88,6 +88,7 @@
                 android:id="@+id/rv_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                tools:itemCount="4"
                 tools:listitem="@layout/item_menu_profile" />
 
             <View
@@ -105,7 +106,7 @@
                 <com.google.android.flexbox.FlexboxLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingVertical="16dp"
+                    android:paddingVertical="8dp"
                     app:alignItems="center">
 
                     <com.google.android.flexbox.FlexboxLayout
