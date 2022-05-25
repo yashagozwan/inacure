@@ -1,6 +1,5 @@
 package com.yashagozwan.inacure.data.repositories
 
-import android.util.Log
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import com.yashagozwan.inacure.data.local.SharedPreferences
@@ -26,7 +25,6 @@ class UserRepository private constructor(
             val response = inacureConfig.inacureService().signIn(signIn)
             emit(Result.Success(response))
         } catch (exc: Exception) {
-            Log.d("UserRepository", exc.toString())
             emit(Result.Error(exc.message.toString()))
         }
     }

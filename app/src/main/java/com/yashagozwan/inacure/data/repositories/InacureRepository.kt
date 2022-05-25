@@ -1,4 +1,7 @@
 package com.yashagozwan.inacure.data.repositories
 
-class InacureRepository {
+import com.yashagozwan.inacure.data.network.api.InacureConfig
+
+class InacureRepository(val inacureConfig: InacureConfig) {
+
 }

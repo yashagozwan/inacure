@@ -12,13 +12,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.yashagozwan.inacure.R
 import com.yashagozwan.inacure.databinding.ActivityScanBinding
+import com.yashagozwan.inacure.ui.main.MainActivity
 import com.yashagozwan.inacure.ui.upload.UploadActivity
+import com.yashagozwan.inacure.utils.Util.createFile
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -52,10 +55,12 @@ class ScanActivity : AppCompatActivity(), View.OnClickListener {
     private fun addButtonListener() {
         viewBinding.btnBack.setOnClickListener(this)
         viewBinding.btnUpload.setOnClickListener(this)
+        viewBinding.ivCapture.setOnClickListener(this)
     }
 
     override fun onClick(view: View) {
         when (view.id) {
+            R.id.iv_capture -> takeImage()
             R.id.btn_back -> finish()
             R.id.btn_upload -> Intent(this, UploadActivity::class.java).also { startActivity(it) }
         }
@@ -73,17 +78,38 @@ class ScanActivity : AppCompatActivity(), View.OnClickListener {
 
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
+            imageCapture = ImageCapture.Builder().build()
+
             try {
                 cameraProvider.unbindAll()
-                cameraProvider.bindToLifecycle(activity, cameraSelector, preview)
+                cameraProvider.bindToLifecycle(activity, cameraSelector, preview, imageCapture)
             } catch (exc: Exception) {
                 Log.e(TAG, "Use case binding failed", exc)
             }
         }, ContextCompat.getMainExecutor(activity))
     }
 
-    private fun takePhoto() {
+    private fun takeImage() {
+        val imageCapture = imageCapture ?: return
+        val photoFile = createFile(application)
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
 
+        imageCapture.takePicture(
+            outputOptions,
+            ContextCompat.getMainExecutor(this),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                    val intent = Intent()
+                    intent.putExtra("image", photoFile)
+                    setResult(MainActivity.CAMERA_X_RESULT, intent)
+                    finish()
+                }
+
+                override fun onError(exception: ImageCaptureException) {
+                    Toast.makeText(this@ScanActivity, "Failed take image", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            })
     }
 
     private fun allPermissionsGranted(): Boolean {

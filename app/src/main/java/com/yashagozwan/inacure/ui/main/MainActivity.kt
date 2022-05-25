@@ -3,7 +3,7 @@ package com.yashagozwan.inacure.ui.main
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -16,26 +16,49 @@ import com.yashagozwan.inacure.ui.ViewModelFactory
 import com.yashagozwan.inacure.ui.main.bookmark.BookmarkFragment
 import com.yashagozwan.inacure.ui.main.home.HomeFragment
 import com.yashagozwan.inacure.ui.main.profile.ProfileFragment
+import com.yashagozwan.inacure.ui.main.scanf.ScanFragment
 import com.yashagozwan.inacure.ui.scan.ScanActivity
-import com.yashagozwan.inacure.ui.signin.SignInActivity
-
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val factory = ViewModelFactory.getInstance(this)
     private val viewModel: MainViewModel by viewModels { factory }
     private lateinit var user: User
+    private var getFile: File? = null
+
+    private val launcherIntentCameraX =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == CAMERA_X_RESULT) {
+                val myFile = it.data?.getSerializableExtra("image") as File
+                getFile = myFile
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         hideAppBar()
-        replaceFragment(HomeFragment())
+        renderFragment()
         bottomNavigation()
         getUserProfile()
     }
 
+    private fun hideAppBar() {
+        supportActionBar?.hide()
+    }
+
+    private fun renderFragment() {
+        if (getFile != null) {
+            val mBundle = Bundle()
+            val mFragment = ScanFragment()
+            mBundle.putSerializable("image", getFile)
+            mFragment.arguments = mBundle
+            replaceFragment(mFragment)
+        }
+        replaceFragment(HomeFragment())
+    }
 
     private fun getUserProfile() {
         viewModel.getToken().observe(this) { token ->
@@ -69,10 +92,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun hideAppBar() {
-        supportActionBar?.hide()
-    }
-
     private fun bottomNavigation() {
         val navView: BottomNavigationView = binding.navView
         navView.setOnItemSelectedListener {
@@ -83,8 +102,15 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.navigation_scan -> {
-                    val intent = Intent(this@MainActivity, ScanActivity::class.java)
-                    startActivity(intent)
+                    if (getFile != null) {
+                        val mBundle = Bundle()
+                        val mFragment = ScanFragment()
+                        mBundle.putSerializable("image", getFile)
+                        mFragment.arguments = mBundle
+                        replaceFragment(mFragment)
+                    } else {
+                        startCameraX()
+                    }
                     true
                 }
 
@@ -106,9 +132,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun startCameraX() {
+        val intent = Intent(this@MainActivity, ScanActivity::class.java)
+        launcherIntentCameraX.launch(intent)
+    }
+
     private fun replaceFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, fragment)
         transaction.commit()
+    }
+
+    companion object {
+        const val CAMERA_X_RESULT = 200
     }
 }
