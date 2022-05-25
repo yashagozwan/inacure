@@ -7,6 +7,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.yashagozwan.inacure.R
 import com.yashagozwan.inacure.data.network.Result
@@ -40,24 +44,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         hideAppBar()
-        renderFragment()
         bottomNavigation()
         getUserProfile()
     }
 
     private fun hideAppBar() {
         supportActionBar?.hide()
-    }
-
-    private fun renderFragment() {
-        if (getFile != null) {
-            val mBundle = Bundle()
-            val mFragment = ScanFragment()
-            mBundle.putSerializable("image", getFile)
-            mFragment.arguments = mBundle
-            replaceFragment(mFragment)
-        }
-        replaceFragment(HomeFragment())
     }
 
     private fun getUserProfile() {
@@ -94,53 +86,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun bottomNavigation() {
         val navView: BottomNavigationView = binding.navView
-        navView.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.navigation_home -> {
-                    replaceFragment(HomeFragment())
-                    true
-                }
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_home,
+                R.id.navigation_scan,
+                R.id.navigation_bookmark,
+                R.id.navigation_profile
+            )
+        )
 
-                R.id.navigation_scan -> {
-                    if (getFile != null) {
-                        val mBundle = Bundle()
-                        val mFragment = ScanFragment()
-                        mBundle.putSerializable("image", getFile)
-                        mFragment.arguments = mBundle
-                        replaceFragment(mFragment)
-                    } else {
-                        startCameraX()
-                    }
-                    true
-                }
-
-                R.id.navigation_bookmark -> {
-                    replaceFragment(BookmarkFragment())
-                    true
-                }
-
-                R.id.navigation_profile -> {
-                    val mBundle = Bundle()
-                    val mFragment = ProfileFragment()
-                    mBundle.putParcelable("USER", user)
-                    mFragment.arguments = mBundle
-                    replaceFragment(mFragment)
-                    true
-                }
-                else -> false
-            }
-        }
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
     }
 
     private fun startCameraX() {
         val intent = Intent(this@MainActivity, ScanActivity::class.java)
         launcherIntentCameraX.launch(intent)
-    }
-
-    private fun replaceFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment_container, fragment)
-        transaction.commit()
     }
 
     companion object {
