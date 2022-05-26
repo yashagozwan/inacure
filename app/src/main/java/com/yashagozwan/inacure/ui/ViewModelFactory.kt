@@ -7,6 +7,7 @@ import com.yashagozwan.inacure.data.repositories.UserRepository
 import com.yashagozwan.inacure.di.Injection
 import com.yashagozwan.inacure.ui.main.MainViewModel
 import com.yashagozwan.inacure.ui.main.profile.ProfileViewModel
+import com.yashagozwan.inacure.ui.process.ProcessViewModel
 import com.yashagozwan.inacure.ui.signin.SignInViewModel
 import com.yashagozwan.inacure.ui.splash.SplashViewModel
 
@@ -29,6 +30,7 @@ class ViewModelFactory private constructor(
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> ProfileViewModel(
                 userRepository
             ) as T
+            modelClass.isAssignableFrom(ProcessViewModel::class.java) -> ProcessViewModel() as T
             else -> throw IllegalArgumentException("Invalid ViewModel class: ${modelClass.name}")
         }
     }

@@ -28,16 +28,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val factory = ViewModelFactory.getInstance(this)
     private val viewModel: MainViewModel by viewModels { factory }
-    private lateinit var user: User
-    private var getFile: File? = null
-
-    private val launcherIntentCameraX =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == CAMERA_X_RESULT) {
-                val myFile = it.data?.getSerializableExtra("image") as File
-                getFile = myFile
-            }
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,15 +54,6 @@ class MainActivity : AppCompatActivity() {
                         }
                         is Result.Success -> {
                             binding.cvLoading.visibility = View.GONE
-                            val response = it.data
-                            val myUser = response.data
-                            user = User(
-                                id = myUser._id,
-                                name = myUser.name,
-                                email = myUser.email,
-                                password = myUser.password,
-                                createdAt = myUser.createdAt
-                            )
                         }
                         is Result.Error -> {
                             binding.cvLoading.visibility = View.GONE
@@ -98,14 +79,5 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-    }
-
-    private fun startCameraX() {
-        val intent = Intent(this@MainActivity, ScanActivity::class.java)
-        launcherIntentCameraX.launch(intent)
-    }
-
-    companion object {
-        const val CAMERA_X_RESULT = 200
     }
 }

@@ -19,7 +19,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.yashagozwan.inacure.R
 import com.yashagozwan.inacure.databinding.ActivityScanBinding
+import com.yashagozwan.inacure.model.ScanImage
 import com.yashagozwan.inacure.ui.main.MainActivity
+import com.yashagozwan.inacure.ui.process.ProcessActivity
 import com.yashagozwan.inacure.ui.upload.UploadActivity
 import com.yashagozwan.inacure.utils.Util.createFile
 import java.util.concurrent.ExecutorService
@@ -53,15 +55,7 @@ class ScanActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun addButtonListener() {
-        viewBinding.btnBack.setOnClickListener(this)
-        viewBinding.btnUpload.setOnClickListener(this)
-
-        viewBinding.ivCapture.setOnClickListener {
-            Toast.makeText(this, "capture", Toast.LENGTH_SHORT).show()
-        }
-
         viewBinding.ivCapture.setOnClickListener(this)
-
     }
 
     override fun onClick(view: View) {
@@ -106,9 +100,10 @@ class ScanActivity : AppCompatActivity(), View.OnClickListener {
             ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                    val intent = Intent()
-                    intent.putExtra("image", photoFile)
-                    setResult(MainActivity.CAMERA_X_RESULT, intent)
+                    val intent = Intent(this@ScanActivity, ProcessActivity::class.java)
+                    val scanImage = ScanImage(photoFile)
+                    intent.putExtra(ProcessActivity.CAMERA_X_RESULT, scanImage)
+                    startActivity(intent)
                     finish()
                 }
 

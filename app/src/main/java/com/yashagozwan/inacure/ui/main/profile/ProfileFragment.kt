@@ -6,20 +6,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.yashagozwan.inacure.R
 import com.yashagozwan.inacure.data.network.Result
 import com.yashagozwan.inacure.databinding.FragmentProfileBinding
-import com.yashagozwan.inacure.model.User
 import com.yashagozwan.inacure.ui.ViewModelFactory
 import com.yashagozwan.inacure.ui.signin.SignInActivity
 import com.yashagozwan.inacure.utils.myItemMenu
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), View.OnClickListener {
     private var _viewBinding: FragmentProfileBinding? = null
     private val viewBinding get() = _viewBinding!!
     private lateinit var factory: ViewModelFactory
@@ -42,12 +40,24 @@ class ProfileFragment : Fragment() {
         }
 
         renderProfile()
+        addButtonListener()
+        renderListMenu()
+    }
 
+    private fun renderListMenu() {
         val rvMenu = viewBinding.rvMenu
         rvMenu.layoutManager = LinearLayoutManager(activity)
         rvMenu.adapter = ItemMenuAdapter(myItemMenu())
+    }
 
-        viewBinding.cvSignOut.setOnClickListener { showAlert() }
+    private fun addButtonListener() {
+        viewBinding.cvSignOut.setOnClickListener(this)
+    }
+
+    override fun onClick(view: View) {
+        when (view.id) {
+            R.id.cv_sign_out -> showAlert()
+        }
     }
 
     private fun renderProfile() {
