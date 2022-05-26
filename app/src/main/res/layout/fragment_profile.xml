@@ -87,12 +87,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:icon="@drawable/ic_edit_profile"
+                    app:iconTint="@color/dark_blue"
                     app:layout_alignSelf="flex_end" />
 
                 <com.google.android.flexbox.FlexboxLayout
-                    android:layout_marginTop="-45dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="-45dp"
                     app:alignItems="center"
                     app:flexDirection="column">
 
@@ -133,7 +134,7 @@
                 android:id="@+id/rv_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:itemCount="4"
+                tools:itemCount="2"
                 tools:listitem="@layout/item_menu_profile" />
 
             <View
@@ -146,12 +147,13 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_sign_out"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:contentPadding="8dp">
 
                 <com.google.android.flexbox.FlexboxLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingVertical="8dp"
                     app:alignItems="center">
 
                     <com.google.android.flexbox.FlexboxLayout

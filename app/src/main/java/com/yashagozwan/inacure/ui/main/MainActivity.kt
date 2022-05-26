@@ -1,12 +1,9 @@
 package com.yashagozwan.inacure.ui.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -15,14 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.yashagozwan.inacure.R
 import com.yashagozwan.inacure.data.network.Result
 import com.yashagozwan.inacure.databinding.ActivityMainBinding
-import com.yashagozwan.inacure.model.User
 import com.yashagozwan.inacure.ui.ViewModelFactory
-import com.yashagozwan.inacure.ui.main.bookmark.BookmarkFragment
-import com.yashagozwan.inacure.ui.main.home.HomeFragment
-import com.yashagozwan.inacure.ui.main.profile.ProfileFragment
-import com.yashagozwan.inacure.ui.main.scanf.ScanFragment
-import com.yashagozwan.inacure.ui.scan.ScanActivity
-import java.io.File
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

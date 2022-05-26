@@ -85,12 +85,12 @@
                 app:layout_flexGrow="1">
 
                 <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/icon"
-                    android:src="@drawable/ic_image"
-                    app:tint="@color/grey" />
+                    android:id="@+id/iv_image_upload"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="@string/image"
+                    android:src="@drawable/image_upload" />
             </androidx.cardview.widget.CardView>
 
             <com.google.android.material.button.MaterialButton

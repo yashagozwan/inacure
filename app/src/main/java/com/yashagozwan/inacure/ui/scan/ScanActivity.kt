@@ -103,6 +103,7 @@ class ScanActivity : AppCompatActivity(), View.OnClickListener {
                     val intent = Intent(this@ScanActivity, ProcessActivity::class.java)
                     val scanImage = ScanImage(photoFile)
                     intent.putExtra(ProcessActivity.CAMERA_X_RESULT, scanImage)
+                    intent.putExtra(ProcessActivity.TITLE, "Finding for the image you scanned")
                     startActivity(intent)
                     finish()
                 }

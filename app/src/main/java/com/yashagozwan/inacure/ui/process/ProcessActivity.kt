@@ -1,16 +1,13 @@
 package com.yashagozwan.inacure.ui.process
 
 import android.graphics.BitmapFactory
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModel
+import androidx.appcompat.app.AppCompatActivity
 import com.yashagozwan.inacure.databinding.ActivityProcessBinding
 import com.yashagozwan.inacure.model.ScanImage
 import com.yashagozwan.inacure.ui.ViewModelFactory
-import com.yashagozwan.inacure.utils.Util
 import com.yashagozwan.inacure.utils.Util.rotateBitmap
-import java.io.File
 
 class ProcessActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityProcessBinding
@@ -21,19 +18,41 @@ class ProcessActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityProcessBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+        hideAppBar()
+        renderTitle()
         renderImage()
     }
 
-    private fun renderImage(){
-        val scanImage = intent.getParcelableExtra<ScanImage>(CAMERA_X_RESULT)
-        if(scanImage != null) {
-            val image = BitmapFactory.decodeFile(scanImage.image.path)
-            val fixedImage = rotateBitmap(image,true)
-            viewBinding.ivImage.setImageBitmap(fixedImage)
+    private fun hideAppBar() {
+        supportActionBar?.hide()
+    }
+
+    private fun renderTitle() {
+        val title = intent.getStringExtra(TITLE)
+        if (title != null) {
+            viewBinding.tvTitle.text = title
+        }
+    }
+
+    private fun renderImage() {
+        val scanImageCameraX = intent.getParcelableExtra<ScanImage>(CAMERA_X_RESULT)
+        val scanImageGallery = intent.getParcelableExtra<ScanImage>(GALLERY_RESULT)
+
+        if (scanImageCameraX != null) {
+            val image = BitmapFactory.decodeFile(scanImageCameraX.image.path)
+            val fixImage = rotateBitmap(image, true)
+            viewBinding.ivImageScan.setImageBitmap(fixImage)
+        }
+
+        if (scanImageGallery != null) {
+            val image = BitmapFactory.decodeFile(scanImageGallery.image.path)
+            viewBinding.ivImageScan.setImageBitmap(image)
         }
     }
 
     companion object {
         const val CAMERA_X_RESULT = "cameraXResult"
+        const val GALLERY_RESULT = "galleryResult"
+        const val TITLE = "title"
     }
 }
