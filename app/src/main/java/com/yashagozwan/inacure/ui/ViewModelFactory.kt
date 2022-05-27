@@ -9,6 +9,7 @@ import com.yashagozwan.inacure.ui.main.MainViewModel
 import com.yashagozwan.inacure.ui.main.profile.ProfileViewModel
 import com.yashagozwan.inacure.ui.process.ProcessViewModel
 import com.yashagozwan.inacure.ui.signin.SignInViewModel
+import com.yashagozwan.inacure.ui.signup.SignUpViewModel
 import com.yashagozwan.inacure.ui.splash.SplashViewModel
 
 class ViewModelFactory private constructor(
@@ -19,6 +20,9 @@ class ViewModelFactory private constructor(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(SignInViewModel::class.java) -> SignInViewModel(
+                userRepository
+            ) as T
+            modelClass.isAssignableFrom(SignUpViewModel::class.java) -> SignUpViewModel(
                 userRepository
             ) as T
             modelClass.isAssignableFrom(MainViewModel::class.java) -> MainViewModel(

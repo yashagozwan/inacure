@@ -6,6 +6,7 @@ import com.yashagozwan.inacure.data.local.SharedPreferences
 import com.yashagozwan.inacure.data.network.Result
 import com.yashagozwan.inacure.data.network.api.InacureConfig
 import com.yashagozwan.inacure.model.SignIn
+import com.yashagozwan.inacure.model.SignUp
 
 class UserRepository private constructor(
     private val sharedPreferences: SharedPreferences,
@@ -23,6 +24,16 @@ class UserRepository private constructor(
         emit(Result.Loading)
         try {
             val response = inacureConfig.inacureService().signIn(signIn)
+            emit(Result.Success(response))
+        } catch (exc: Exception) {
+            emit(Result.Error(exc.message.toString()))
+        }
+    }
+
+    fun signUp(signUp: SignUp) = liveData {
+        emit(Result.Loading)
+        try {
+            val response = inacureConfig.inacureService().signUp(signUp)
             emit(Result.Success(response))
         } catch (exc: Exception) {
             emit(Result.Error(exc.message.toString()))

@@ -5,12 +5,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.widget.doOnTextChanged
 import com.yashagozwan.inacure.R
+import com.yashagozwan.inacure.data.network.Result
 import com.yashagozwan.inacure.databinding.ActivitySignUpBinding
+import com.yashagozwan.inacure.model.SignUp
+import com.yashagozwan.inacure.ui.ViewModelFactory
 
 class SignUpActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var viewBinding: ActivitySignUpBinding
+    private val factory = ViewModelFactory.getInstance(this)
+    private val viewModel: SignUpViewModel by viewModels { factory }
     private var isValidName: Boolean = false
     private var isValidEmail: Boolean = false
     private var isValidPassword: Boolean = false
@@ -98,9 +104,29 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         val password = viewBinding.editPassword.text.toString().trim()
 
         if (isValidName && isValidEmail && isValidPassword) {
-            Toast.makeText(this, "$name, $email, $password", Toast.LENGTH_SHORT).show()
+            val signUp = SignUp(name, email, password)
+            viewModel.signUp(signUp).observe(this) {
+                when (it) {
+                    is Result.Loading -> {
+                        viewBinding.cvLoading.visibility = View.VISIBLE
+                        viewBinding.tvEmailError.visibility = View.GONE
+                    }
+
+                    is Result.Success -> {
+                        viewBinding.cvLoading.visibility = View.GONE
+                        viewBinding.tvEmailError.visibility = View.GONE
+                        finish()
+                        showToast("Created")
+                    }
+
+                    is Result.Error -> {
+                        viewBinding.cvLoading.visibility = View.GONE
+                        viewBinding.tvEmailError.visibility = View.VISIBLE
+                    }
+                }
+            }
         } else {
-            Toast.makeText(this, "Please fill in all the fields", Toast.LENGTH_SHORT).show()
+            showToast("Please fill in all the fields")
         }
     }
 
@@ -109,5 +135,9 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
             R.id.tv_sign_in -> finish()
             R.id.btn_sign_up -> signUp()
         }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

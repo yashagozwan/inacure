@@ -215,5 +215,4 @@
             app:lottie_rawRes="@raw/loading" />
     </androidx.cardview.widget.CardView>
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
