@@ -73,7 +73,7 @@ class UploadActivity : AppCompatActivity(), View.OnClickListener {
     private fun startGallery() {
         val intent = Intent()
         intent.action = ACTION_GET_CONTENT
-        intent.type = "image/"
+        intent.type = "image/*"
         val chooser = Intent.createChooser(intent, "Select Image")
         launcherIntentGalley.launch(chooser)
     }
