@@ -1,9 +1,8 @@
 package com.yashagozwan.inacure.data.network.api
 
 import com.yashagozwan.inacure.model.*
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
+import okhttp3.MultipartBody
+import retrofit2.http.*
 
 interface InacureService {
 
@@ -15,4 +14,10 @@ interface InacureService {
 
     @GET("api/v1/users/profile")
     suspend fun getUserProfile(): CurrentUserResponse
+
+    @POST("api/v1/predict")
+    @Multipart
+    suspend fun predict(
+        @Part file: MultipartBody.Part
+    ): PredictResponse
 }
