@@ -1,5 +1,6 @@
 package com.yashagozwan.inacure.ui.process
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.widget.Toast
@@ -9,6 +10,7 @@ import com.yashagozwan.inacure.data.network.Result
 import com.yashagozwan.inacure.databinding.ActivityProcessBinding
 import com.yashagozwan.inacure.model.ScanImage
 import com.yashagozwan.inacure.ui.ViewModelFactory
+import com.yashagozwan.inacure.ui.appropriate.AppropriateActivity
 import com.yashagozwan.inacure.utils.Util.reduceFileImage
 import com.yashagozwan.inacure.utils.Util.rotateBitmap
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -74,6 +76,9 @@ class ProcessActivity : AppCompatActivity() {
                         makeToast("Loading")
                     }
                     is Result.Success -> {
+                        val intent = Intent(this@ProcessActivity, AppropriateActivity::class.java)
+                        startActivity(intent)
+                        finish()
                         makeToast("Success")
                     }
                     is Result.Error -> {
