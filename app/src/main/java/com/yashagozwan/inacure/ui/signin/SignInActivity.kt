@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doOnTextChanged
 import com.yashagozwan.inacure.R
 import com.yashagozwan.inacure.databinding.ActivitySignInBinding
@@ -16,6 +17,9 @@ import com.yashagozwan.inacure.ui.ViewModelFactory
 import com.yashagozwan.inacure.ui.signup.SignUpActivity
 import com.yashagozwan.inacure.data.network.Result
 import com.yashagozwan.inacure.ui.main.MainActivity
+import www.sanju.motiontoast.MotionToast
+import www.sanju.motiontoast.MotionToastStyle
+import java.io.StringBufferInputStream
 
 class SignInActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var viewBinding: ActivitySignInBinding

@@ -62,14 +62,14 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
     private fun renderProfile() {
         viewModel.getToken().observe(viewLifecycleOwner) { token ->
-            viewModel.getUserProfile(token).observe(viewLifecycleOwner) {
-                when (it) {
+            viewModel.getUserProfile(token).observe(viewLifecycleOwner) { result ->
+                when (result) {
                     is Result.Loading -> {
                         viewBinding.cvLoading.visibility = View.VISIBLE
                     }
                     is Result.Success -> {
                         viewBinding.cvLoading.visibility = View.GONE
-                        val response = it.data
+                        val response = result.data
                         val user = response.data
                         viewBinding.tvName.text = user.name
                         viewBinding.tvEmail.text = user.email

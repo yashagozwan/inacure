@@ -7,5 +7,9 @@ data class PredictResponse(
 )
 
 data class PredictData(
-    val _id: String
+    val _id: String,
+    val name: String,
+    val latinName: String,
+    val family: String,
+    val imageUrl: String
 )

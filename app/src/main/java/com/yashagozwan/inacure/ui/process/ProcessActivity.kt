@@ -3,14 +3,17 @@ package com.yashagozwan.inacure.ui.process
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.widget.Toast
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.yashagozwan.inacure.data.network.Result
 import com.yashagozwan.inacure.databinding.ActivityProcessBinding
+import com.yashagozwan.inacure.model.MyImage
 import com.yashagozwan.inacure.model.ScanImage
 import com.yashagozwan.inacure.ui.ViewModelFactory
 import com.yashagozwan.inacure.ui.appropriate.AppropriateActivity
+import com.yashagozwan.inacure.ui.failed.FailedActivity
+import com.yashagozwan.inacure.utils.Constants
 import com.yashagozwan.inacure.utils.Util.reduceFileImage
 import com.yashagozwan.inacure.utils.Util.rotateBitmap
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -22,7 +25,7 @@ class ProcessActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityProcessBinding
     private val factory = ViewModelFactory.getInstance(this)
     private val viewModel: ProcessViewModel by viewModels { factory }
-    private var imageFile: File? = null
+    private var myImage: MyImage? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,22 +53,22 @@ class ProcessActivity : AppCompatActivity() {
         val scanImageGallery = intent.getParcelableExtra<ScanImage>(GALLERY_RESULT)
 
         if (scanImageCameraX != null) {
-            imageFile = scanImageCameraX.image
+            myImage = MyImage(scanImageCameraX.image, Constants.CAMERA)
             val image = BitmapFactory.decodeFile(scanImageCameraX.image.path)
             val fixImage = rotateBitmap(image, true)
             viewBinding.ivImageScan.setImageBitmap(fixImage)
         }
 
         if (scanImageGallery != null) {
-            imageFile = scanImageGallery.image
+            myImage = MyImage(scanImageGallery.image, Constants.GALLERY)
             val image = BitmapFactory.decodeFile(scanImageGallery.image.path)
             viewBinding.ivImageScan.setImageBitmap(image)
         }
     }
 
     private fun uploadImageFile() {
-        if (imageFile != null) {
-            val file = reduceFileImage(imageFile as File)
+        if (myImage != null) {
+            val file = reduceFileImage(myImage?.image as File)
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
             val imageMultipart =
                 MultipartBody.Part.createFormData("file", file.name, requestImageFile)
@@ -73,24 +76,28 @@ class ProcessActivity : AppCompatActivity() {
             viewModel.predict(imageMultipart).observe(this) {
                 when (it) {
                     is Result.Loading -> {
-                        makeToast("Loading")
+
                     }
                     is Result.Success -> {
                         val intent = Intent(this@ProcessActivity, AppropriateActivity::class.java)
+                        intent.putExtra(AppropriateActivity.IMAGE_RESULT, myImage)
                         startActivity(intent)
                         finish()
-                        makeToast("Success")
+
+                        val tag = ProcessActivity::class.java.simpleName
+                        val response = it.data
+                        val data = response.data
+                        Log.d(tag, data.toString())
                     }
                     is Result.Error -> {
-                        makeToast(it.error)
+                        val intent = Intent(this@ProcessActivity, FailedActivity::class.java)
+                        intent.putExtra(FailedActivity.FROM_ACTIVITY, myImage?.from)
+                        startActivity(intent)
+                        finish()
                     }
                 }
             }
         }
-    }
-
-    private fun makeToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     companion object {
