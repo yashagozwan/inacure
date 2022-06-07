@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.yashagozwan.inacure.data.network.Result
 import com.yashagozwan.inacure.databinding.ActivityProcessBinding
 import com.yashagozwan.inacure.model.MyImage
+import com.yashagozwan.inacure.model.PredictData
 import com.yashagozwan.inacure.model.ScanImage
 import com.yashagozwan.inacure.ui.ViewModelFactory
 import com.yashagozwan.inacure.ui.appropriate.AppropriateActivity
@@ -73,27 +74,29 @@ class ProcessActivity : AppCompatActivity() {
             val imageMultipart =
                 MultipartBody.Part.createFormData("file", file.name, requestImageFile)
 
-            viewModel.predict(imageMultipart).observe(this) {
-                when (it) {
-                    is Result.Loading -> {
+            viewModel.getToken().observe(this) { token ->
+                viewModel.predict(token, imageMultipart).observe(this) {
+                    when (it) {
+                        is Result.Loading -> {
 
-                    }
-                    is Result.Success -> {
-                        val intent = Intent(this@ProcessActivity, AppropriateActivity::class.java)
-                        intent.putExtra(AppropriateActivity.IMAGE_RESULT, myImage)
-                        startActivity(intent)
-                        finish()
-
-                        val tag = ProcessActivity::class.java.simpleName
-                        val response = it.data
-                        val data = response.data
-                        Log.d(tag, data.toString())
-                    }
-                    is Result.Error -> {
-                        val intent = Intent(this@ProcessActivity, FailedActivity::class.java)
-                        intent.putExtra(FailedActivity.FROM_ACTIVITY, myImage?.from)
-                        startActivity(intent)
-                        finish()
+                        }
+                        is Result.Success -> {
+                            val intent =
+                                Intent(this@ProcessActivity, AppropriateActivity::class.java)
+                            val response = it.data
+                            val data = response.data
+                            intent.putExtra(AppropriateActivity.DATA, data)
+                            intent.putExtra(AppropriateActivity.IMAGE_RESULT, myImage)
+                            startActivity(intent)
+                            finish()
+                        }
+                        is Result.Error -> {
+                            Log.d("ProcessActivity", it.error)
+                            val intent = Intent(this@ProcessActivity, FailedActivity::class.java)
+                            intent.putExtra(FailedActivity.FROM_ACTIVITY, myImage?.from)
+                            startActivity(intent)
+                            finish()
+                        }
                     }
                 }
             }

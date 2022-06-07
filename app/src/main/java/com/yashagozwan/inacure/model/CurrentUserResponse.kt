@@ -8,6 +8,7 @@ data class CurrentUserResponse(
 
 data class CurrentUserData(
     val _id: String,
+    val imageUrl: String,
     val name: String,
     val email: String,
     val password: String,

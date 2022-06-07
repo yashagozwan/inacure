@@ -37,6 +37,7 @@ class ViewModelFactory private constructor(
                 userRepository
             ) as T
             modelClass.isAssignableFrom(ProcessViewModel::class.java) -> ProcessViewModel(
+                userRepository,
                 inacureRepository
             ) as T
             else -> throw IllegalArgumentException("Invalid ViewModel class: ${modelClass.name}")

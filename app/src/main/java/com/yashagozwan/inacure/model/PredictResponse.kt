@@ -1,15 +1,20 @@
 package com.yashagozwan.inacure.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 data class PredictResponse(
     val error: Boolean,
     val message: String? = null,
     val data: PredictData
 )
 
+@Parcelize
 data class PredictData(
     val _id: String,
     val name: String,
     val latinName: String,
     val family: String,
-    val imageUrl: String
-)
+    val imageUrl: String,
+    val description: String,
+): Parcelable

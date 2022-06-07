@@ -1,5 +1,6 @@
 package com.yashagozwan.inacure.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -13,6 +14,7 @@ import com.yashagozwan.inacure.R
 import com.yashagozwan.inacure.data.network.Result
 import com.yashagozwan.inacure.databinding.ActivityMainBinding
 import com.yashagozwan.inacure.ui.ViewModelFactory
+import com.yashagozwan.inacure.ui.signin.SignInActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -47,6 +49,11 @@ class MainActivity : AppCompatActivity() {
                         }
                         is Result.Error -> {
                             binding.cvLoading.visibility = View.GONE
+                            viewModel.deleteToken()
+                            Intent(
+                                this@MainActivity,
+                                SignInActivity::class.java
+                            ).also { startActivity(it) }
                             finish()
                         }
                     }

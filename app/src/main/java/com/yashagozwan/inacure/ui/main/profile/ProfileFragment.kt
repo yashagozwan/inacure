@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.yashagozwan.inacure.R
 import com.yashagozwan.inacure.data.network.Result
 import com.yashagozwan.inacure.databinding.FragmentProfileBinding
@@ -71,6 +72,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                         viewBinding.cvLoading.visibility = View.GONE
                         val response = result.data
                         val user = response.data
+                        Glide.with(this).load(user.imageUrl).into(viewBinding.civProfile)
                         viewBinding.tvName.text = user.name
                         viewBinding.tvEmail.text = user.email
                     }

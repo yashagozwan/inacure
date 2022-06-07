@@ -6,10 +6,10 @@ import com.yashagozwan.inacure.data.network.api.InacureConfig
 import okhttp3.MultipartBody
 
 class InacureRepository(private val inacureConfig: InacureConfig) {
-    fun predict(file: MultipartBody.Part) = liveData {
+    fun predict(token: String, file: MultipartBody.Part) = liveData {
         emit(Result.Loading)
         try {
-            val response = inacureConfig.inacureService().predict(file)
+            val response = inacureConfig.inacureService(token).predict(file)
             emit(Result.Success(response))
         } catch (exc: Exception) {
             emit(Result.Error(exc.message.toString()))

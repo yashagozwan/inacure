@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object InacureConfig {
-    private const val BASE_URL = "https://naufalpilotproject.de.r.appspot.com"
+    private const val BASE_URL = "https://inacure.as.r.appspot.com"
 
     fun inacureService(token: String = ""): InacureService {
         val interceptor = Interceptor {
