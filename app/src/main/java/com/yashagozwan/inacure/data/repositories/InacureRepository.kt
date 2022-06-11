@@ -16,6 +16,15 @@ class InacureRepository(private val inacureConfig: InacureConfig) {
         }
     }
 
+    fun getArticles(token: String) = liveData {
+        emit(Result.Loading)
+        try {
+            val response = inacureConfig.inacureService(token).getArticles()
+            emit(Result.Success(response))
+        } catch (exc: Exception) {
+            emit(Result.Error(exc.message.toString()))
+        }
+    }
 
     companion object {
         private var instance: InacureRepository? = null

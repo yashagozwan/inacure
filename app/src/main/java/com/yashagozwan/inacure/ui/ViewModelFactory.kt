@@ -7,6 +7,7 @@ import com.yashagozwan.inacure.data.repositories.InacureRepository
 import com.yashagozwan.inacure.data.repositories.UserRepository
 import com.yashagozwan.inacure.di.Injection
 import com.yashagozwan.inacure.ui.main.MainViewModel
+import com.yashagozwan.inacure.ui.main.home.HomeViewModel
 import com.yashagozwan.inacure.ui.main.profile.ProfileViewModel
 import com.yashagozwan.inacure.ui.process.ProcessViewModel
 import com.yashagozwan.inacure.ui.signin.SignInViewModel
@@ -32,6 +33,10 @@ class ViewModelFactory private constructor(
             ) as T
             modelClass.isAssignableFrom(SplashViewModel::class.java) -> SplashViewModel(
                 userRepository
+            ) as T
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> HomeViewModel(
+                userRepository,
+                inacureRepository
             ) as T
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> ProfileViewModel(
                 userRepository
