@@ -7,6 +7,7 @@ import com.yashagozwan.inacure.data.repositories.InacureRepository
 import com.yashagozwan.inacure.data.repositories.UserRepository
 import com.yashagozwan.inacure.di.Injection
 import com.yashagozwan.inacure.ui.main.MainViewModel
+import com.yashagozwan.inacure.ui.main.history.HistoryViewModel
 import com.yashagozwan.inacure.ui.main.home.HomeViewModel
 import com.yashagozwan.inacure.ui.main.profile.ProfileViewModel
 import com.yashagozwan.inacure.ui.process.ProcessViewModel
@@ -37,6 +38,9 @@ class ViewModelFactory private constructor(
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> HomeViewModel(
                 userRepository,
                 inacureRepository
+            ) as T
+            modelClass.isAssignableFrom(HistoryViewModel::class.java) -> HistoryViewModel(
+                userRepository
             ) as T
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> ProfileViewModel(
                 userRepository

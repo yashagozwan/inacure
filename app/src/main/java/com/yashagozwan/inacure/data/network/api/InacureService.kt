@@ -16,6 +16,9 @@ interface InacureService {
     @GET(Endpoint.Profile)
     suspend fun getUserProfile(): CurrentUserResponse
 
+    @GET(Endpoint.History)
+    suspend fun getHistory(): HistoryResponse
+
     @POST(Endpoint.Predict)
     @Multipart
     suspend fun predict(

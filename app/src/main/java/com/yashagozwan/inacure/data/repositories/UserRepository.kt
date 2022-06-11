@@ -50,6 +50,16 @@ class UserRepository private constructor(
         }
     }
 
+    fun getHistory(token: String) = liveData {
+        emit(Result.Loading)
+        try {
+            val response = inacureConfig.inacureService(token).getHistory()
+            emit(Result.Success(response))
+        } catch (exc: Exception) {
+            emit(Result.Error(exc.message.toString()))
+        }
+    }
+
     companion object {
         private var instance: UserRepository? = null
         fun getInstance(
