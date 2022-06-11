@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.yashagozwan.inacure.data.network.Result
 import com.yashagozwan.inacure.databinding.FragmentHomeBinding
 import com.yashagozwan.inacure.ui.ViewModelFactory
@@ -37,6 +38,21 @@ class HomeFragment : Fragment() {
 
     private fun renderArticlesList() {
         viewModel.getToken().observe(viewLifecycleOwner) { token ->
+
+            viewModel.getUserProfile(token).observe(viewLifecycleOwner) { result ->
+                when (result) {
+                    is Result.Loading -> {}
+                    is Result.Success -> {
+                        val response = result.data
+                        val data = response.data
+
+                        Glide.with(viewBinding.root).load(data.imageUrl)
+                            .into(viewBinding.civProfile)
+                    }
+                    is Result.Error -> {}
+                }
+            }
+
             viewModel.getArticles(token).observe(viewLifecycleOwner) { result ->
                 when (result) {
                     is Result.Loading -> {}

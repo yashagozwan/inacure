@@ -41,8 +41,11 @@ class HistoryFragment : Fragment() {
             viewModel.getToken().observe(viewLifecycleOwner) { token ->
                 viewModel.getHistory(token).observe(viewLifecycleOwner) { result ->
                     when (result) {
-                        is Result.Loading -> {}
+                        is Result.Loading -> {
+                            viewBinding.cvLoading.visibility = View.VISIBLE
+                        }
                         is Result.Success -> {
+                            viewBinding.cvLoading.visibility = View.GONE
                             val response = result.data
                             val data = response.data
 
@@ -50,7 +53,9 @@ class HistoryFragment : Fragment() {
                             rvHistory.layoutManager = LinearLayoutManager(this)
                             rvHistory.adapter = HistoryAdapter(data)
                         }
-                        is Result.Error -> {}
+                        is Result.Error -> {
+                            viewBinding.cvLoading.visibility = View.GONE
+                        }
                     }
                 }
             }

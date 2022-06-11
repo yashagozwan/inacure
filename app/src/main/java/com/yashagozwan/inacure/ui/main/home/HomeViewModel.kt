@@ -9,5 +9,6 @@ class HomeViewModel(
     private val inacureRepository: InacureRepository
 ) : ViewModel() {
     fun getToken() = userRepository.getToken()
+    fun getUserProfile(token: String) = userRepository.getUserProfile(token)
     fun getArticles(token: String) = inacureRepository.getArticles(token)
 }
