@@ -1,5 +1,6 @@
 package com.yashagozwan.inacure.ui.appropriate
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.yashagozwan.inacure.databinding.ActivityAppropriateBinding
 import com.yashagozwan.inacure.model.MyImage
 import com.yashagozwan.inacure.model.PredictData
+import com.yashagozwan.inacure.ui.detail.DetailActivity
 import com.yashagozwan.inacure.utils.Constants
 import com.yashagozwan.inacure.utils.Util.rotateBitmap
 
@@ -56,6 +58,13 @@ class AppropriateActivity : AppCompatActivity() {
                 tvName.text = data.name
                 tvLatinName.text = data.latinName
                 tvDescription.text = data.description
+
+                btnSeeArticle.setOnClickListener {
+                    val intent = Intent(this@AppropriateActivity, DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.PREDICTION, data)
+                    startActivity(intent)
+                    finish()
+                }
             }
         }
     }

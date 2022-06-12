@@ -12,9 +12,12 @@ data class PredictResponse(
 @Parcelize
 data class PredictData(
     val _id: String,
+    val imageUrl: String,
     val name: String,
     val latinName: String,
     val family: String,
-    val imageUrl: String,
     val description: String,
+    val ingredient: String,
+    val efficacy: List<String>,
+    val onlineShop: String
 ): Parcelable

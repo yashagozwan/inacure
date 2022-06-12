@@ -48,10 +48,10 @@ class HistoryFragment : Fragment() {
                             viewBinding.cvLoading.visibility = View.GONE
                             val response = result.data
                             val data = response.data
-
+                            val reverseData = data.asReversed()
                             val rvHistory = viewBinding.rvHistory
                             rvHistory.layoutManager = LinearLayoutManager(this)
-                            rvHistory.adapter = HistoryAdapter(data)
+                            rvHistory.adapter = HistoryAdapter(reverseData)
                         }
                         is Result.Error -> {
                             viewBinding.cvLoading.visibility = View.GONE
